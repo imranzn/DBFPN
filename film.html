@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detail Film | DBFPN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0b0b0b;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* NAVIGATION BAR */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #121212;
+      padding: 10px 24px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    header img { height: 50px; }
+    .back-btn {
+      background: transparent;
+      color: #f5c518;
+      border: 2px solid #f5c518;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #f5c518;
+      color: #000;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* TITLE & RATING */
+    .top-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #222;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .judul-film { font-size: 30px; font-weight: 700; margin-bottom: 4px; }
+    .genre-tahun { color: #ccc; }
+    .rating-group {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      font-size: 15px;
+    }
+    .rating-box strong { color: #f5c518; }
+    .rating-box span { color: #fff; }
+
+    /* POSTER & TRAILER */
+    .main-content {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .poster img {
+      width: 260px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    iframe {
+      flex: 1;
+      border-radius: 10px;
+      border: none;
+      height: 300px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    /* SINOPSIS & INFO */
+    .sinopsis h3 {
+      color: #f5c518;
+      margin-bottom: 8px;
+    }
+    .sinopsis p {
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .info-lain p {
+      margin: 8px 0;
+      color: #ccc;
+    }
+    .info-lain strong {
+      color: #f5c518;
+      width: 100px;
+      display: inline-block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      color: #888;
+      font-size: 13px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <header>
+    <img src="pictures/DBFPN.png" alt="Logo DBFPN">
+    <button class="back-btn" onclick="window.location.href='index.html'">← Kembali</button>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <div class="top-info">
+      <div>
+        <h1 id="judulFilm" class="judul-film"></h1>
+        <p id="genreTahun" class="genre-tahun"></p>
+      </div>
+      <div class="rating-group">
+        <div class="rating-box"><strong>DBFPN Rating:</strong> <span id="dbfpnRating"></span></div>
+        <div class="rating-box"><strong>Rating Kamu:</strong> <span>☆ Beri Nilai</span></div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="poster"><img id="posterFilm" alt="Poster Film"></div>
+      <iframe id="trailerFilm"></iframe>
+    </div>
+
+    <div class="sinopsis">
+      <h3>Sinopsis Film</h3>
+      <p id="sinopsisFilm"></p>
+    </div>
+
+    <div class="info-lain">
+      <p><strong>Sutradara:</strong> <span id="sutradaraFilm"></span></p>
+      <p><strong>Penulis:</strong> <span id="penulisFilm"></span></p>
+      <p><strong>Produser:</strong> <span id="produserFilm"></span></p>
+      <p><strong>Pemeran:</strong> <span id="pemeranFilm"></span></p>
+    </div>
+  </div>
+
+  <footer>© DBFPN — 2025</footer>
+
+  <script>
+    const film = JSON.parse(localStorage.getItem("selectedFilm"));
+    if (film) {
+      document.getElementById("judulFilm").textContent = film.judul;
+      document.getElementById("genreTahun").textContent = `${film.genre} • ${film.tahun}`;
+      document.getElementById("dbfpnRating").textContent = `⭐ ${film.ratingDBFPN}`;
+      document.getElementById("posterFilm").src = film.poster;
+      document.getElementById("trailerFilm").src = film.trailer;
+      document.getElementById("sinopsisFilm").textContent = film.sinopsis;
+      document.getElementById("sutradaraFilm").textContent = film.sutradara;
+      document.getElementById("penulisFilm").textContent = film.penulis;
+      document.getElementById("produserFilm").textContent = film.produser;
+      document.getElementById("pemeranFilm").textContent = film.pemeran;
+    } else {
+      document.body.innerHTML = "<p style='text-align:center;color:#ccc;margin-top:100px;'>Data film tidak ditemukan.</p>";
+    }
+  </script>
+</body>
+</html>
